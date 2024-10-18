@@ -1,7 +1,7 @@
 #include "rand.h"
 
-uint32_t qrand_idum = 1;
-uint32_t qrand_itemp;
+static uint32_t qrand_idum = 1;
+static uint32_t qrand_itemp;
 
 uint32_t get_random_seed(void) {
 	return qrand_idum;

@@ -11,14 +11,14 @@
 #define BAD_RIVER_CORNER 5
 
 int main(int argc, char* argv[]) {
-	int iter = 500;
+	uint32_t iter = 10000;
 
 	clock_t start, end;
 	start = clock();
 
-	for (int i = 0; i < iter; i++) {
-		set_random_seed( (uint32_t)i );
-		printf("\nSeed %d", i);
+	for (uint32_t i = 0; i < iter; i++) {
+		set_random_seed(i);
+		printf("\nSeed %X", get_random_seed());
 
 		int result = generate();
 
@@ -45,14 +45,13 @@ int main(int argc, char* argv[]) {
 		else {
 			printf(" | Found valid town!");
 			print_acre_ids();
-			//break;
-			continue;
+			break;
 		}
 	}
 
 	end = clock();
 	double time_used = ((double)(end - start) / CLOCKS_PER_SEC);
-	
+	printf("\nFinished generating in %f seconds", time_used);
 	
 	return 0;
 }

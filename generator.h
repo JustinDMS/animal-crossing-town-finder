@@ -3,6 +3,7 @@
 #include "rand.h"
 
 #define TO_BIT(type) (1 << type)
+#define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
@@ -11,6 +12,10 @@
 #define ANSI_COLOR_MAGENTA "\x1b[35m"
 #define ANSI_COLOR_CYAN    "\x1b[36m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
+
+#define BLOCK_X_NUM 7
+#define BLOCK_Z_NUM 10
+#define BLOCK_TOTAL_NUM (BLOCK_X_NUM * BLOCK_Z_NUM)
 
 typedef struct blocks {
 	uint16_t combination_type : 14;
