@@ -37,6 +37,22 @@ typedef struct block_group {
 typedef struct island {
 	uint8_t bg_data[2];
 } island;
+typedef struct animal_home_info {
+	uint8_t acre_x;
+	uint8_t acre_z;
+	uint8_t unit_x;
+	uint8_t unit_z;
+} animal_home_info;
+typedef struct animal {
+	uint16_t id;
+	animal_home_info home_info;
+} animal;
+
+typedef struct npc_default_data {
+	uint16_t cloth;
+	uint16_t catchphrase_idx;
+	signed char umbrella;
+} npc_default_data;
 
 /* GENERATION */
 
@@ -48,8 +64,8 @@ void set_end_cliff(uint8_t* _cliff_blocks);
 int last_check_cliff(uint8_t* _cliff_blocks, int bx, int bz);
 int decide_base_river(uint8_t* _river_blocks, uint8_t* _cliff_blocks);
 int trace_river_1(uint8_t* _river_blocks, uint8_t* _cliff_blocks, int* start_bx, int* start_bz);
-int trace_river_2(uint8_t* river_data, uint8_t* cliff_data, int bx, int bz, uint8_t* challenge_flag);
-int last_check_river(uint8_t* river_blocks, int bx, int bz);
+int trace_river_2(uint8_t* _river_blocks, uint8_t* _cliff_blocks, int bx, int bz, uint8_t* challenge_flag);
+int last_check_river(uint8_t* _river_blocks, int bx, int bz);
 int decide_river_album(uint8_t* _cliff_blocks, uint8_t* _river_blocks);
 void set_flat_blocks(uint8_t* _cliff_blocks);
 void set_beach(uint8_t* _cliff_blocks);
@@ -65,6 +81,9 @@ int set_beach_bridge(uint8_t* _cliff_blocks, int flags);
 void set_base(uint8_t* _base_table, uint8_t* _cliff_blocks);
 void set_acres(blocks* _table, block_info* _info, int count, uint8_t* _cliff_blocks);
 void copy_base_height_data(blocks* _table, uint8_t* _base_table);
+void generate_fruit_trees(void);
+void generate_cedar_trees(void);
+void decide_npcs();
 
 /* UTILITY */
 
@@ -94,7 +113,16 @@ uint16_t bg_name_to_random(uint16_t bg_name, block_info* _info, int block_count)
 int get_type_count(block_info* _info, int block_count, uint8_t type, int16_t reuse);
 int get_already_in_use(int16_t value);
 int16_t index_to_block(block_info* _info, int block_count, uint8_t type, int idx, int16_t reuse);
+void init_acre_id_table(void);
+void init_current_tree_count(void);
+void pull_trees(void);
+int get_tree_count(int acre_idx);
+void decrement_tree_in_acre(int acre_id);
+void init_random_npc_table(int* table, int count, int swap_num);
+void init_animal_table(void);
 
+void print_fruit(int id);
 void print_acre_ids(void);
 void print_colorful_id(uint16_t id, char color[]);
 int validate_town(void);
+void print_animal_ids(void);
