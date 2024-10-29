@@ -11,7 +11,7 @@
 #define BAD_RIVER_CORNER 5
 
 int main(int argc, char* argv[]) {
-	uint32_t iter = 2543;
+	uint32_t iter = 555;
 
 	/*FILE* file = NULL;
 	file = fopen("results.txt", "a");
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 	clock_t start, end;
 	start = clock();
 
-	for (uint32_t i = 0; i < 2544; i++) {
+	for (uint32_t i = 550; i < iter; i++) {
 		set_random_seed(i);
 		//printf("\nSeed %X", get_random_seed());
 		uint32_t cur_seed = i;

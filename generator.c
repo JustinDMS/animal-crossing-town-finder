@@ -7415,6 +7415,53 @@ uint8_t looks_table[238] = {
     1
 };
 
+static uint16_t furniture_list_a[103] = {
+	0x1008, 0x102C, 0x1030, 0x1044, 0x1058, 0x1068, 0x106C, 0x10A8, 0x10AC, 0x10BC, 0x10D8, 0x10E8, 0x10FC, 0x1100, 0x1108, 0x1114, 0x1128, 0x112C, 0x1134, 0x113C,
+	0x1150, 0x1164, 0x1178, 0x1184, 0x119C, 0x11C8, 0x11D0, 0x11D8, 0x11E8, 0x1228, 0x1234, 0x1254, 0x126C, 0x1278, 0x1284, 0x1298, 0x12A4, 0x12D0, 0x12DC, 0x12E8,
+	0x12EC, 0x12F8, 0x1310, 0x131C, 0x1320, 0x132C, 0x1330, 0x1354, 0x135C, 0x1374, 0x1378, 0x138C, 0x139C, 0x13AC, 0x13B8, 0x13C4, 0x13D8, 0x13E4, 0x1404, 0x140C,
+	0x1410, 0x1414, 0x1468, 0x1480, 0x1494, 0x14A4, 0x14E4, 0x14F4, 0x1514, 0x1534, 0x1544, 0x1580, 0x1588, 0x158C, 0x159C, 0x15A4, 0x1DF8, 0x1E4C, 0x1E50, 0x1E58,
+	0x1E70, 0x1EB4, 0x1EC8, 0x1ED8, 0x1EE8, 0x30E8, 0x30F8, 0x31E8, 0x31EC, 0x3200, 0x3234, 0x323C, 0x3240, 0x3248, 0x324C, 0x3278, 0x32A4, 0x32B4, 0x32B8, 0x32C0,
+	0x333C, 0x334C, 0x3350
+};
+static uint16_t furniture_list_b[104] = {
+	0x100C, 0x1014, 0x1018, 0x1028, 0x1064, 0x1074, 0x10A4, 0x10C4, 0x10C8, 0x10DC, 0x10EC, 0x1104, 0x1118, 0x111C, 0x1138, 0x1140, 0x116C, 0x1174, 0x1188, 0x1194,
+	0x11A0, 0x11B4, 0x11C0, 0x11CC, 0x11D4, 0x11DC, 0x11E4, 0x11EC, 0x11F0, 0x120C, 0x1214, 0x122C, 0x1238, 0x1258, 0x1260, 0x1264, 0x1268, 0x1270, 0x127C, 0x129C,
+	0x12D4, 0x12E0, 0x12F4, 0x12FC, 0x130C, 0x1318, 0x1324, 0x134C, 0x1368, 0x1370, 0x1380, 0x1394, 0x13A0, 0x13A4, 0x13A8, 0x13B4, 0x13DC, 0x13E8, 0x1408, 0x142C,
+	0x1440, 0x1450, 0x146C, 0x1488, 0x14AC, 0x14DC, 0x14E8, 0x14FC, 0x1510, 0x1518, 0x1524, 0x153C, 0x1568, 0x1570, 0x1584, 0x1590, 0x15A8, 0x1E08, 0x1E5C, 0x1E60,
+	0x1E6C, 0x1EB8, 0x1ECC, 0x1ED4, 0x1F50, 0x30EC, 0x30F4, 0x31F4, 0x31F8, 0x3204, 0x320C, 0x3214, 0x3218, 0x3220, 0x3244, 0x3264, 0x3268, 0x326C, 0x3270, 0x3290,
+	0x32C4, 0x3328, 0x3330, 0x3354
+};
+static uint16_t furniture_list_c[103] = {
+	0x101C, 0x1038, 0x1040, 0x104C, 0x1070, 0x1078, 0x1088, 0x10B8, 0x10E0, 0x10F0, 0x10F8, 0x1110, 0x1120, 0x1124, 0x1144, 0x114C, 0x1154, 0x115C, 0x117C, 0x118C,
+	0x1190, 0x1198, 0x11A8, 0x11B0, 0x11BC, 0x11C4, 0x11E0, 0x1210, 0x121C, 0x1230, 0x124C, 0x125C, 0x1274, 0x1280, 0x1288, 0x128C, 0x1294, 0x12A0, 0x12A8, 0x12D8,
+	0x12E4, 0x1300, 0x1304, 0x1308, 0x1334, 0x133C, 0x1340, 0x1350, 0x1360, 0x1384, 0x1388, 0x1390, 0x13BC, 0x13C0, 0x13C8, 0x13CC, 0x13D0, 0x13D4, 0x13EC, 0x13F0,
+	0x141C, 0x1424, 0x1428, 0x1444, 0x145C, 0x1470, 0x1478, 0x147C, 0x14A8, 0x14E0, 0x14EC, 0x14F0, 0x1500, 0x151C, 0x1530, 0x1554, 0x1558, 0x1560, 0x15AC, 0x1E04,
+	0x1E44, 0x1E54, 0x1E64, 0x1E68, 0x1EE4, 0x30F0, 0x31FC, 0x3208, 0x3224, 0x322C, 0x3250, 0x3254, 0x3260, 0x3284, 0x3288, 0x329C, 0x32B0, 0x32D8, 0x32DC, 0x3338,
+	0x3348, 0x3358, 0x3368
+};
+static uint16_t cloth_list_a[71] = {
+	0x2400, 0x2403, 0x240C, 0x2437, 0x243D, 0x2440, 0x2443, 0x2446, 0x2449, 0x2450, 0x245E, 0x2461, 0x2464, 0x246F, 0x2474, 0x2478, 0x247B, 0x2494, 0x2498, 0x249D,
+	0x24A2, 0x24A7, 0x24A9, 0x24AA, 0x24AD, 0x24B0, 0x24B3, 0x24BF, 0x24C3, 0x24D3, 0x24D6, 0x24E3, 0x2426, 0x242A, 0x2468, 0x247A, 0x2485, 0x24B4, 0x24C9, 0x24CD,
+	0x24E8, 0x24F1, 0x2433, 0x2435, 0x2480, 0x2488, 0x248D, 0x249C, 0x24A5, 0x24B9, 0x24C5, 0x24CB, 0x24D7, 0x240D, 0x242B, 0x2430, 0x2455, 0x2462, 0x2470, 0x24C2,
+	0x24D2, 0x24F6, 0x2408, 0x2431, 0x246B, 0x2482, 0x2490, 0x24A8, 0x24DC, 0x24E5, 0x24E9
+};
+static uint16_t cloth_list_b[71] = {
+	0x2404, 0x2406, 0x240B, 0x241D, 0x2438, 0x243B, 0x243E, 0x2441, 0x2444, 0x2447, 0x244A, 0x244D, 0x2453, 0x2465, 0x2469, 0x2471, 0x2475, 0x2479, 0x247F, 0x2491,
+	0x249E, 0x24AB, 0x24AE, 0x24B1, 0x24B6, 0x24B7, 0x24BA, 0x24BD, 0x24C1, 0x24D4, 0x24D8, 0x24E1, 0x240E, 0x2454, 0x245B, 0x2473, 0x247D, 0x2486, 0x24C7, 0x24EC,
+	0x24FC, 0x24FE, 0x243A, 0x244C, 0x244E, 0x2466, 0x247C, 0x2481, 0x248A, 0x2497, 0x24B5, 0x24F2, 0x24F5, 0x2402, 0x242F, 0x2457, 0x2463, 0x2483, 0x2496, 0x24A0,
+	0x24C4, 0x24D9, 0x241C, 0x2451, 0x246C, 0x248E, 0x2499, 0x24A3, 0x24E6, 0x24EA, 0x24F4
+};
+static uint16_t cloth_list_c[71] = {
+	0x2401, 0x2405, 0x240F, 0x242D, 0x2439, 0x243C, 0x243F, 0x2442, 0x2445, 0x2448, 0x244B, 0x244F, 0x2452, 0x2456, 0x2458, 0x245D, 0x2460, 0x246A, 0x2472, 0x2476,
+	0x2484, 0x248C, 0x249A, 0x249F, 0x24A4, 0x24AC, 0x24AF, 0x24B2, 0x24D0, 0x24D5, 0x24DA, 0x24E2, 0x2409, 0x241E, 0x2467, 0x2477, 0x247E, 0x24A6, 0x24C0, 0x24C8,
+	0x24CE, 0x24EF, 0x2407, 0x2427, 0x2429, 0x2459, 0x248B, 0x2492, 0x24BE, 0x24CA, 0x24D1, 0x24EE, 0x24FB, 0x240A, 0x245A, 0x246E, 0x2487, 0x2493, 0x2495, 0x24A1,
+	0x24CF, 0x24EB, 0x2428, 0x246D, 0x248F, 0x249B, 0x24C6, 0x24E4, 0x24E7, 0x24ED, 0x24F9
+};
+static uint16_t* furniture_list[3] = { furniture_list_a, furniture_list_b, furniture_list_c };
+static uint16_t* empty_list[3] = {};
+static uint16_t* cloth_list[3] = { cloth_list_a, cloth_list_b, cloth_list_c };
+static uint16_t** goods_seg[3] = { furniture_list, empty_list, cloth_list};
+
 int generate() {
 	fqrand(); // Not sure where this call is in source, but everything else is wrong without it
 
@@ -7494,7 +7541,30 @@ int generate() {
     decide_npcs();
     print_animal_ids();
 
+	int face = RANDOM(8);
+	float pid = fqrand() * 253.0f;
+	uint16_t cloth = RANDOM(8);
 
+	int animal_remove_idx = RANDOM(6);
+	//printf("Animal Remove idx = %d\n", animal_remove_idx);
+
+	init_police_items();
+
+	fqrand(); // mSN_snowman_init -> mSN_decide_msg
+	RANDOM(15); // Train Station type
+	RANDOM(30) + 1; // Town day
+	fqrand(); // mISL_init -> mNpc_DecideIslandNpc
+	// End of mSDI_StartInitNew
+
+	// StartInitAfter
+	// mNpc_ForceRemove?
+	fqrand(); // mEnv_DecideWeather_NormalGameStart
+	fqrand(); // mNpc_Grow
+
+	init_npc_home_data();
+	print_animal_homes();
+
+	return 0;
 }
 
 int make_base_landform(uint8_t* _cliff_blocks, uint8_t* _river_blocks) {
@@ -8347,6 +8417,70 @@ void decide_npcs() {
     }
 }
 
+void init_police_items(void) {
+	uint16_t police_items[3];
+	uint16_t* _items = police_items;
+	
+	select_random_item(_items + 0, 1, 0); // 1 Furniture
+	//printf("Police Station Furniture: %04X\n", police_items[0]);
+
+	select_random_item(_items + 1, 2, 2); // 2 Shirts
+	//printf("Police Station Shirt 1: %04X\n", police_items[1]);
+	//printf("Police Station Shirt 2: %04X\n", police_items[2]);
+}
+
+void init_npc_home_data(void) {
+	static animal_home_info reserved[60];
+	uint8_t reserved_num = 0;
+
+	make_reserved_list(reserved, 60, &reserved_num);
+	set_npc_home(animals, reserved, reserved_num);
+}
+
+void set_npc_home(animal* _animals, animal_home_info* _reserved, uint8_t _reserved_num) {
+	static int fake_table[60];
+
+	animal_home_info* home;
+	int* fake_table_p = fake_table;
+	int n = 0;
+	int idx;
+
+	init_random_npc_table(fake_table_p, _reserved_num, 30);
+
+	for (int i = 0; i < 15; i++) {
+		if (_animals->home_info.acre_x == 0xFF && _animals->home_info.acre_z == 0xFF) {
+			idx = fake_table_p[n];
+
+			if (idx >= _reserved_num) {
+				while ((idx = fake_table_p[n], idx >= _reserved_num) && n < _reserved_num) {
+					n++;
+				}
+
+				if (n >= _reserved_num) {
+					return;
+				}
+			}
+
+			if (idx < _reserved_num) {
+				home = &_reserved[idx];
+
+				_animals->home_info.acre_x = home->acre_x;
+				_animals->home_info.acre_z = home->acre_z;
+				_animals->home_info.unit_x = home->unit_x;
+				_animals->home_info.unit_z = home->unit_z;
+			}
+
+			n++;
+		}
+
+		if (n >= _reserved_num) {
+			break;
+		}
+
+		_animals++;
+	}
+}
+
 /* UTILITY */
 
 void init_table(blocks* _table) {
@@ -8934,7 +9068,150 @@ void init_random_npc_table(int* table, int count, int swap_num) {
 void init_animal_table(void) {
     for (int i = 0; i < 15; i++) {
         animals[i].id = 0x0000;
+		animals[i].home_info.acre_x = 0xFF;
+		animals[i].home_info.acre_z = 0xFF;
     }
+}
+
+void select_random_item(uint16_t* _items, int goods_count, int category) {
+	uint16_t** goods_seg_p = goods_seg[category];
+	int i = 0;
+
+	while (i < goods_count) {
+		int rarity = 0;
+		uint16_t* item_list = get_item_list(goods_seg_p, &rarity);
+		int selected_idx = 0;
+
+		if (category == 2) { // Cloth
+			static uint8_t cloth_season_count[5] = { 32, 10, 11, 9, 9 };
+
+			int cloth_season = get_cloth_season(6, 1);
+			int cloth_count = cloth_season_count[0] + cloth_season_count[cloth_season];
+			selected_idx = RANDOM(cloth_count);
+
+			if (selected_idx >= cloth_season_count[0]) {
+				for (int i = 1; i < cloth_season; i++) {
+					selected_idx += cloth_season_count[i];
+				}
+			}
+		}
+		else {
+			static int furniture_count[3] = { 103, 104, 103 };
+			selected_idx = RANDOM(furniture_count[rarity]);
+		}
+
+		_items[i] = item_list[selected_idx];
+		i++;
+	}
+}
+
+uint16_t* get_item_list(uint16_t** lists, int* _rarity) {
+	int abc_roll = RANDOM(100);
+	int goods_power = 0;
+	int rare_chance = goods_power + 5;
+	int uncommon_chance = rare_chance + 35;
+
+	if (abc_roll < rare_chance) {
+		_rarity = 2;
+		return lists[2];
+	}
+	else if (abc_roll < uncommon_chance) {
+		_rarity = 1;
+		return lists[1];
+	}
+	else {
+		_rarity = 0;
+		return lists[0];
+	}
+
+}
+
+int get_cloth_season(int month, int day) {
+	switch (month) {
+	case 1:
+		return 4;
+	case 2:
+		if (day < 25)
+			return 4;
+		return 1;
+	case 3:
+	case 4:
+		return 1;
+	case 5:
+		if (day < 27)
+			return 1;
+		return 2;
+	case 6:
+	case 7:
+		return 2;
+	case 8:
+		if (day < 27)
+			return 2;
+		return 3;
+	case 9:
+	case 10:
+		return 3;
+	case 11:
+		if (day < 27)
+			return 3;
+		return 4;
+	case 12:
+		return 4;
+	}
+
+	return -1;
+}
+
+void make_reserved_list(animal_home_info* _reserved, int _reserved_num, uint8_t* reserved_count) {
+	animal_home_info* reserved_p = _reserved;
+	uint16_t fg[256];
+	uint8_t num = 0;
+
+	for (int i = 0; i < _reserved_num; i++) {
+		_reserved->acre_x = -1;
+		_reserved->acre_z = -1;
+		_reserved->unit_x = -1;
+		_reserved->unit_z = -1;
+		_reserved++;
+	}
+
+	_reserved = reserved_p;
+	for (int i = 0; i < 6; i++) {
+		for (int j = 0; j < 5; j++) {
+			// Find the acre in the fg map
+			int acre_idx = (i * 5) + j;
+			for (int a = 0; a < 369; a++) {
+				//printf("%d == %d\n", fg_map[a][0][0], acre_ids[acre_idx]);
+				if (fg_map[a][0][0] == acre_ids[acre_idx]) {
+					for (int b = 0; b < 256; b++) {
+						fg[b] = fg_map[a][1][b];
+					}
+					break;
+				}
+			}
+
+			for (int k = 0; k < 16; k++) {
+				for (int l = 0; l < 16; l++) {
+					//printf("Item = %04X\n", fg[(k * 16) + l]);
+					uint16_t item = fg[(k * 16) + l];
+					if (IS_RESERVE(item)) {
+						num++;
+						_reserved->acre_x = j + 1;
+						_reserved->acre_z = i + 1;
+						_reserved->unit_x = l;
+						_reserved->unit_z = k;
+						_reserved++;
+						if (num >= _reserved_num) {
+							*reserved_count = num;
+							return;
+						}
+					}
+				}
+			}
+		}
+	}
+	//printf("Reserved count = %d\n", num);
+	*reserved_count = num;
 }
 
 void print_fruit(int id) {
@@ -9046,6 +9323,35 @@ int validate_town(void) {
 
 void print_animal_ids() {
     for (int i = 0; i < 6; i++) {
-        printf("\nVillager %d = %X", i + 1, animals[i].id);
+        printf("Villager %d = %X\n", i + 1, animals[i].id);
     }
+}
+
+void print_animal_homes(void) {
+	for (int i = 0; i < 6; i++) {
+		printf("Villager %d: ", i + 1);
+
+		switch (animals[i].home_info.acre_z) {
+		case 1:
+			printf("A-");
+			break;
+		case 2:
+			printf("B-");
+			break;
+		case 3:
+			printf("C-");
+			break;
+		case 4:
+			printf("D-");
+			break;
+		case 5:
+			printf("E-");
+			break;
+		case 6:
+			printf("F-");
+			break;
+		}
+	
+		printf("%d\n", animals[i].home_info.acre_x);
+	}
 }

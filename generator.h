@@ -5,6 +5,11 @@
 #define TO_BIT(type) (1 << type)
 #define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
+#define STRUCTURE_START 0x5800
+#define SIGN00 (STRUCTURE_START + 16)
+#define SIGN20 (STRUCTURE_START + 36)
+#define IS_RESERVE(n) ((n) >= SIGN00 && (n) <= SIGN20)
+
 #define ANSI_COLOR_RED     "\x1b[31m"
 #define ANSI_COLOR_GREEN   "\x1b[32m"
 #define ANSI_COLOR_YELLOW  "\x1b[33m"
@@ -47,7 +52,12 @@ typedef struct animal {
 	uint16_t id;
 	animal_home_info home_info;
 } animal;
-
+typedef struct goods_priority_list {
+	uint8_t a : 2;
+	uint8_t b : 2;
+	uint8_t c : 2;
+	uint8_t pad : 2;
+} goods_priority_list;
 typedef struct npc_default_data {
 	uint16_t cloth;
 	uint16_t catchphrase_idx;
@@ -84,6 +94,9 @@ void copy_base_height_data(blocks* _table, uint8_t* _base_table);
 void generate_fruit_trees(void);
 void generate_cedar_trees(void);
 void decide_npcs();
+void init_police_items(void);
+void init_npc_home_data(void);
+void set_npc_home(animal* _animals, animal_home_info* _reserved, uint8_t _reserved_num);
 
 /* UTILITY */
 
@@ -120,9 +133,14 @@ int get_tree_count(int acre_idx);
 void decrement_tree_in_acre(int acre_id);
 void init_random_npc_table(int* table, int count, int swap_num);
 void init_animal_table(void);
+void select_random_item(uint16_t* _items, int goods_count, int category);
+uint16_t* get_item_list(uint16_t** lists, int* _rarity);
+int get_cloth_season(int month, int day);
+void make_reserved_list(animal_home_info* _reserved, int _reserved_num, uint8_t* reserved_count);
 
 void print_fruit(int id);
 void print_acre_ids(void);
 void print_colorful_id(uint16_t id, char color[]);
 int validate_town(void);
 void print_animal_ids(void);
+void print_animal_homes(void);
