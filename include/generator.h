@@ -5,6 +5,32 @@
 #include <inttypes.h>
 #include "../include/rand.h"
 
+/*
+* Stores data about town for writing
+* Binary format: fixed-width entries, 115 bytes per seed, little-endian
+*/
+#pragma pack(1)
+struct TownData {
+	uint32_t seed;
+	uint8_t fruit;
+	uint8_t grass_pattern;
+	uint8_t step;
+	uint8_t train_station;
+	uint8_t day;
+	uint16_t acre_ids[35];
+
+	struct VillagerData
+	{
+		uint16_t id;
+		uint8_t acre_x; // Acre Column (1-5)
+		uint8_t acre_z; // Acre Row (A-F)
+		uint8_t unit_x; // X Coordinate (1-16)
+		uint8_t unit_z; // Y Coordinate (1-16)
+
+	} villagers[6];
+};
+#pragma pack()
+
 #define TO_BIT(type) (1 << type)
 #define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 
@@ -69,7 +95,7 @@ typedef struct npc_default_data {
 
 /* GENERATION */
 
-int generate();
+int generate(struct TownData* town);
 int make_base_landform(uint8_t* _cliff_blocks, uint8_t* _river_blocks);
 int decide_base_cliff(uint8_t* _cliff_blocks);
 int trace_cliff(uint8_t* _cliff_blocks, int bx, int bz);
@@ -149,5 +175,8 @@ int value_in_array(uint16_t value, uint16_t* array, int size);
 void print_animal_ids(void);
 void print_animal_homes(void);
 int validate_npc_homes(void);
+
+void write_acre_ids(struct TownData* town);
+void write_villagers(struct TownData* town);
 
 #endif // !GENERATOR_H

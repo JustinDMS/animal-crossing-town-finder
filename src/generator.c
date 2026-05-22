@@ -7462,12 +7462,11 @@ static uint16_t* empty_list[3] = {};
 static uint16_t* cloth_list[3] = { cloth_list_a, cloth_list_b, cloth_list_c };
 static uint16_t** goods_seg[3] = { furniture_list, empty_list, cloth_list};
 
-int generate() {
+int generate(struct TownData* town) {
 	fqrand(); // Not sure where this call is in source, but everything else is wrong without it
 
-	int fruit = RANDOM(5);
-
-    RANDOM(3); // BG Texture
+	town->fruit = RANDOM(5);
+    town->grass_pattern = RANDOM(3);
 
     static uint8_t cliff_blocks[BLOCK_TOTAL_NUM];
     static uint8_t river_blocks[BLOCK_TOTAL_NUM];
@@ -7476,6 +7475,7 @@ int generate() {
     int bit = 0;
     int perfect_bit = 511; // (1 << 9) - 1
     int step_mode = RANDOM(100) < 15; // 0 = 2 step, 1 = 3 step
+	town->step = step_mode;
 
     while (perfect_bit != (perfect_bit & bit)) {
         bit = 0;
@@ -7518,27 +7518,27 @@ int generate() {
     }
     
     init_acre_id_table(); // Town layout complete
+	write_acre_ids(town);
 
     init_current_tree_count();
 	pull_trees();
     generate_fruit_trees();
     generate_cedar_trees();
     
-    (int)(fqrand() * 256.0f) | 0x3000; // mLd_MakeLandId
+    (void)fqrand(); // mLd_MakeLandId
 
     decide_npcs();
 
-	int face = RANDOM(8);
-	float pid = fqrand() * 253.0f;
-	uint16_t cloth = RANDOM(8);
-
-	int animal_remove_idx = RANDOM(6);
+	(void)RANDOM(8); // Face
+	(void)fqrand(); // pid
+	(void)RANDOM(8); // Clothes
+	(void)RANDOM(6); // Animal remove idx
 
 	init_police_items();
 
 	fqrand(); // mSN_snowman_init -> mSN_decide_msg
-	RANDOM(15); // Train Station type
-	RANDOM(30) + 1; // Town day
+	town->train_station = RANDOM(15);
+	town->day = RANDOM(30) + 1;
 	fqrand(); // mISL_init -> mNpc_DecideIslandNpc
 	// End of mSDI_StartInitNew
 
@@ -7547,6 +7547,7 @@ int generate() {
 	fqrand(); // mNpc_Grow
 
 	init_npc_home_data();
+	write_villagers(town);
 
 	return 0;
 }
@@ -7582,7 +7583,6 @@ int trace_cliff(uint8_t* _cliff_blocks, int bx, int bz) {
     int block_num = d2_to_d1(bx, bz);
     uint8_t type = _cliff_blocks[block_num] - 15;
     int res = 0;
-    int i = 0;
 
     while (res == 0) {
         int next_idx = RANDOM(cliff_next_data[type]->count);
@@ -8327,7 +8327,7 @@ void generate_fruit_trees(void) {
             int change_num = 1;
 
             while (change_num > 0 && count != 0) {
-                int selected = RANDOM(count);
+                (void)RANDOM(count); // Selected tree
                 decrement_tree_in_acre(acre_ids[acre_indices[a]]);
                 //printf("Changed to fruit tree in acre %04X\n", acre_ids[acre_indices[a]]);
                 count--;
@@ -8347,7 +8347,7 @@ void generate_cedar_trees(void) {
             int count = get_tree_count(acre_ids[acre_idx]);
 
             while (change_num > 0 && count != 0) {
-                int selected = RANDOM(count);
+				(void)RANDOM(count); // Selected tree
                 decrement_tree_in_acre(acre_ids[acre_idx]);
 				//printf("Changed to cedar tree in acre %04X\n", acre_ids[acre_idx]);
                 count--;
@@ -9368,5 +9368,40 @@ int validate_npc_homes(void) {
 	}
 	else {
 		return -1;
+	}
+}
+
+void write_acre_ids(struct TownData* town) {
+	uint16_t* idx = town->acre_ids;
+
+	for (int i = 0; i < BLOCK_TOTAL_NUM; i++) {
+		if (
+			(i >= 8  && i <= 12) || // A 1-5
+			(i >= 15 && i <= 19) || // B 1-5
+			(i >= 22 && i <= 26) || // C 1-5
+			(i >= 29 && i <= 33) || // D 1-5
+			(i >= 36 && i <= 40) || // E 1-5
+			(i >= 43 && i <= 47))   // F 1-5
+		{ 
+			uint16_t id = table[i].combination_type << 2;
+			*idx = id;
+			idx++;
+		}
+	}
+}
+
+void write_villagers(struct TownData* town) {
+	struct VillagerData* data = town->villagers;
+
+	for (int i = 0; i < 6; i++) {
+		struct VillagerData villager = {
+			animals[i].id,
+			animals[i].home_info.acre_x,
+			animals[i].home_info.acre_z,
+			animals[i].home_info.unit_x,
+			animals[i].home_info.unit_z
+		};
+		*data = villager;
+		data++;
 	}
 }
