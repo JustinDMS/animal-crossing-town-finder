@@ -1,3 +1,6 @@
+#ifndef GENERATOR_H
+#define GENERATOR_H
+
 #include <stdio.h>
 #include <inttypes.h>
 #include "../include/rand.h"
@@ -146,3 +149,5 @@ int value_in_array(uint16_t value, uint16_t* array, int size);
 void print_animal_ids(void);
 void print_animal_homes(void);
 int validate_npc_homes(void);
+
+#endif // !GENERATOR_H
