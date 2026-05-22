@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <inttypes.h>
-#include "rand.h"
+#include "../include/rand.h"
 
 #define TO_BIT(type) (1 << type)
 #define ARRAY_COUNT(arr) (int)(sizeof(arr) / sizeof(arr[0]))
@@ -142,5 +142,7 @@ void print_fruit(int id);
 void print_acre_ids(void);
 void print_colorful_id(uint16_t id, char color[]);
 int validate_town(void);
+int value_in_array(uint16_t value, uint16_t* array, int size);
 void print_animal_ids(void);
 void print_animal_homes(void);
+int validate_npc_homes(void);

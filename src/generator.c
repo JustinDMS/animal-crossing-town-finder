@@ -1,4 +1,4 @@
-#include "generator.h"
+#include "../include/generator.h"
 
 blocks table[BLOCK_TOTAL_NUM] = {
   { 209, 1 }, { 201, 1 }, { 201, 1 }, { 201, 1 }, { 202, 1 }, { 201, 1 }, { 210, 1 },
@@ -7466,7 +7466,7 @@ int generate() {
 	fqrand(); // Not sure where this call is in source, but everything else is wrong without it
 
 	int fruit = RANDOM(5);
-	print_fruit(fruit);
+	//print_fruit(fruit);
 
     RANDOM(3); // BG Texture
 
@@ -7477,11 +7477,11 @@ int generate() {
     int bit = 0;
     int perfect_bit = 511; // (1 << 9) - 1
     int step_mode = RANDOM(100) < 15; // 0 = 2 step, 1 = 3 step
-	printf("Step mode is %d\n", step_mode);
+	//printf("Step mode is %d\n", step_mode);
     
-    /*if (step_mode == 1) {
+    if (step_mode == 1) {
         return 1;
-    }*/
+    }
 
     while (perfect_bit != (perfect_bit & bit)) {
         bit = 0;
@@ -7522,14 +7522,8 @@ int generate() {
         set_acres(table, info, 368, cliff_blocks);
         copy_base_height_data(table, base_table);
     }
-
-    // Check if the town layout is good before continuing
-    /*int validate = validate_town();
-    if (validate != 0) {
-        return validate;
-    }*/
     
-    init_acre_id_table();
+    init_acre_id_table(); // Town layout complete
 
     init_current_tree_count();
 	pull_trees();
@@ -7539,7 +7533,7 @@ int generate() {
     (int)(fqrand() * 256.0f) | 0x3000; // mLd_MakeLandId
 
     decide_npcs();
-    print_animal_ids();
+    //print_animal_ids();
 
 	int face = RANDOM(8);
 	float pid = fqrand() * 253.0f;
@@ -7557,14 +7551,13 @@ int generate() {
 	// End of mSDI_StartInitNew
 
 	// StartInitAfter
-	// mNpc_ForceRemove?
 	fqrand(); // mEnv_DecideWeather_NormalGameStart
 	fqrand(); // mNpc_Grow
 
 	init_npc_home_data();
-	print_animal_homes();
+	//print_animal_homes();
 
-	return 0;
+	return validate_npc_homes();
 }
 
 int make_base_landform(uint8_t* _cliff_blocks, uint8_t* _river_blocks) {
@@ -9280,45 +9273,50 @@ void print_colorful_id(uint16_t id, char color[]) {
 }
 
 int validate_town(void) {
-    /*
-    Ideal town for Golden Rod:
-    - 2 Layer Town
-    - A2 Post Office
-    - A4 Nook
-    - Lake in B-5/C-4/C-5 (IDs: 01FC, 02C8, 02CC, 02E8, 02EC, 02F8, 02FC)
-    - Good river corner acre (IDs: 0234, 01D0, 00EC)
-    */
+	static uint16_t post_acres[3] = { 0x0370, 0x0380, 0x0384 };
+	static uint16_t nook_acres[3] = { 0x0374, 0x037C, 0x0374 };
+	static uint16_t well_acres[3] = { 0x0364, 0x0368, 0x036C };
+	static uint16_t lake_acres[7] = { 0x01FC, 0x02C8, 0x02CC, 0x02E8, 0x02EC, 0x02F8, 0x02FC };
 
-    uint16_t a2 = table[9].combination_type << 2;
-    if (a2 == 0x0370 || a2 == 0x0380 || a2 == 0x0384) { // Post
+	uint16_t a2 = table[9].combination_type << 2;
+	uint16_t a4 = table[11].combination_type << 2;
+	
+	if (
+		value_in_array(a2, post_acres, 3) != 1 ||
+		value_in_array(a4, nook_acres, 3) != 1
+		) {
+		return 1;
+	}
 
-        uint16_t a4 = table[11].combination_type << 2;
-        if (a4 == 0x0374 || a4 == 0x037C || a4 == 0x0374) { // Nook
+	int flag = 0;
+	for (int i = 15; i < 27; i++) { // Check row C for a lake
+		uint16_t acre = table[i].combination_type << 2;
+		flag += value_in_array(acre, lake_acres, 7);
+	}
+	if (flag == 0) {
+		return 1;
+	}
 
-            uint16_t b5 = table[19].combination_type << 2; // Lake
-            if (b5 == 0x01FC || b5 == 0x02C8 || b5 == 0x02CC || b5 == 0x02E8 || b5 == 0x02EC || b5 == 0x02F8 || b5 == 0x02FC) {
-                return 0;
-            }
+	flag = 0;
+	for (int i = 29; i < 34; i++) { // Check row D for Wishing Well
+		uint16_t acre = table[i].combination_type << 2;
+		flag += value_in_array(acre, well_acres, 3);
+	}
+	if (flag == 0) {
+		return 1;
+	}
 
-            uint16_t c4 = table[25].combination_type << 2; // Lake
-            if (c4 == 0x01FC || c4 == 0x02C8 || c4 == 0x02CC || c4 == 0x02E8 || c4 == 0x02EC || c4 == 0x02F8 || c4 == 0x02FC) {
-                return 0;
-            }
+	return 0;
 
-            uint16_t c5 = table[26].combination_type << 2; // Lake
-            if (c5 == 0x01FC || c5 == 0x02C8 || c5 == 0x02CC || c5 == 0x02E8 || c5 == 0x02EC || c5 == 0x02F8 || c5 == 0x02FC) {
-                return 0;
-            }
+}
 
-            return 4;
-        }
-        else {
-            return 3;
-        }
-    }
-    else {
-        return 2;
-    }
+int value_in_array(uint16_t value, uint16_t* array, int size) {
+	for (int i = 0; i < size; i++) {
+		if (array[i] == value) {
+			return 1;
+		}
+	}
+	return 0;
 }
 
 void print_animal_ids() {
@@ -9353,5 +9351,31 @@ void print_animal_homes(void) {
 		}
 	
 		printf("%d\n", animals[i].home_info.acre_x);
+	}
+}
+
+int validate_npc_homes(void) {
+	// Make sure there are 3 homes in the acre below Nook's
+	int count = 0;
+
+	for (int i = 0; i < 6; i++) {
+		if (animals[i].home_info.acre_z == 2) {
+			if (animals[i].home_info.acre_x == 4) {
+				count += 1;
+			}
+		}
+		else if (animals[i].home_info.acre_z > 3) {
+			return -1;
+		}
+		/*if (animals[i].home_info.acre_z == 2 && animals[i].home_info.acre_x == 4) {
+			count += 1;
+		}*/
+	}
+
+	if (count >= 3) {
+		return 0;
+	}
+	else {
+		return -1;
 	}
 }

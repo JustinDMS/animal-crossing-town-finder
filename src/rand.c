@@ -1,4 +1,4 @@
-#include "rand.h"
+#include "../include/rand.h"
 
 static uint32_t qrand_idum = 1;
 static uint32_t qrand_itemp;
