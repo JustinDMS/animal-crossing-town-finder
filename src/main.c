@@ -3,8 +3,6 @@
 #include "../include/rand.h"
 #include "../include/generator.h"
 
-#define SUCCESS 0
-
 int main(int argc, char* argv[]) {
 	uint32_t iter = UINT32_MAX;
 
@@ -23,14 +21,7 @@ int main(int argc, char* argv[]) {
 		uint32_t cur_seed = i;
 
 		int result = generate();
-
-		if (result == SUCCESS) {
-			printf("%X | Found valid town!\n", cur_seed);
-		}
-
-		if (cur_seed % 1000000 == 0) {
-			printf("%d seeds checked\n", cur_seed);
-		}
+		//printf("%X | Found valid town!\n", cur_seed);
 	}
 
 	/*fprintf(file, "----------\n");

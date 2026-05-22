@@ -7466,7 +7466,6 @@ int generate() {
 	fqrand(); // Not sure where this call is in source, but everything else is wrong without it
 
 	int fruit = RANDOM(5);
-	//print_fruit(fruit);
 
     RANDOM(3); // BG Texture
 
@@ -7477,11 +7476,6 @@ int generate() {
     int bit = 0;
     int perfect_bit = 511; // (1 << 9) - 1
     int step_mode = RANDOM(100) < 15; // 0 = 2 step, 1 = 3 step
-	//printf("Step mode is %d\n", step_mode);
-    
-    if (step_mode == 1) {
-        return 1;
-    }
 
     while (perfect_bit != (perfect_bit & bit)) {
         bit = 0;
@@ -7533,14 +7527,12 @@ int generate() {
     (int)(fqrand() * 256.0f) | 0x3000; // mLd_MakeLandId
 
     decide_npcs();
-    //print_animal_ids();
 
 	int face = RANDOM(8);
 	float pid = fqrand() * 253.0f;
 	uint16_t cloth = RANDOM(8);
 
 	int animal_remove_idx = RANDOM(6);
-	//printf("Animal Remove idx = %d\n", animal_remove_idx);
 
 	init_police_items();
 
@@ -7555,9 +7547,8 @@ int generate() {
 	fqrand(); // mNpc_Grow
 
 	init_npc_home_data();
-	//print_animal_homes();
 
-	return validate_npc_homes();
+	return 0;
 }
 
 int make_base_landform(uint8_t* _cliff_blocks, uint8_t* _river_blocks) {
@@ -9105,15 +9096,15 @@ uint16_t* get_item_list(uint16_t** lists, int* _rarity) {
 	int uncommon_chance = rare_chance + 35;
 
 	if (abc_roll < rare_chance) {
-		_rarity = 2;
+		*_rarity = 2;
 		return lists[2];
 	}
 	else if (abc_roll < uncommon_chance) {
-		_rarity = 1;
+		*_rarity = 1;
 		return lists[1];
 	}
 	else {
-		_rarity = 0;
+		*_rarity = 0;
 		return lists[0];
 	}
 
