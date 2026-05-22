@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Iinclude -Wall
+CFLAGS = -Iinclude -Wall -O3 -march=native -funroll-loops
 TARGET = build/animal-crossing-town-finder.exe
 
 SRCS = src/main.c \
