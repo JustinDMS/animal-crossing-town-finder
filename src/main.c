@@ -7,12 +7,14 @@
 #define BATCH_SIZE 10000
 
 int main(int argc, char* argv[]) {
+	// Try to allocate one batch of TownData
 	struct TownData* batch = malloc(BATCH_SIZE * sizeof(struct TownData));
 	if (batch == NULL) {
 		printf("Failed to allocate enough space");
 		return 2;
 	}
 
+	// Try to create file
 	FILE* db = fopen("towns.bin", "wb");
 	if (db == NULL) {
 		printf("Failed to open database file");
@@ -21,11 +23,11 @@ int main(int argc, char* argv[]) {
 	}
 
 	int batch_count = 0;
-
 	clock_t start, end;
 	start = clock();
 
-	for (uint32_t seed = 0; seed <= 0; seed++) {
+	// Generate towns
+	for (uint32_t seed = 0; seed < UINT32_MAX; seed++) {
 		set_random_seed(seed);
 		batch[batch_count].seed = seed;
 		(void)generate(&batch[batch_count]);
@@ -36,6 +38,7 @@ int main(int argc, char* argv[]) {
 			batch_count = 0;
 		}
 	}
+	// Flush batch
 	if (batch_count > 0) {
 		fwrite(batch, sizeof(struct TownData), batch_count, db);
 	}
