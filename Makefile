@@ -1,6 +1,6 @@
 CC = gcc
-CFLAGS = -Iinclude -Wall -O3 -march=native -funroll-loops
-TARGET = build/animal-crossing-town-finder.exe
+CFLAGS = -Iinclude -Wall -O3 -funroll-loops
+TARGET = build/ACTownGenerator.exe
 
 SRCS = src/main.c \
        src/generator.c \
